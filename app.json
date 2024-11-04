@@ -1,0 +1,52 @@
+{
+  "expo": {
+    "name": "MatadorMaps",
+    "slug": "MatadorMaps",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "myapp",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.jasotran.MatadorMaps"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "e7c55649-96e2-4c4f-be97-9e5ddb318be7"
+      }
+    },
+      "expo": {
+        "plugins": [
+          [
+            "@rnmapbox/maps",
+            {
+              "RNMapboxMapsDownloadToken": "sk.eyJ1IjoiamFzb3RyYW4iLCJhIjoiY20zM2M1djl1MDJhMjJqcHU5aG1nYnZsNSJ9.FJ3-xDCgj-X-ci8BLDOsng"
+            }
+          ]
+        ]
+    }
+  }
+}

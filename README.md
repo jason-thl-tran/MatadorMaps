@@ -2,6 +2,9 @@
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
+#figma link
+https://www.figma.com/design/yvhfkrSE9q0BMRdufT7S9D/Matador-maps?node-id=0-1&t=fmu6EPs30JH4Ed8z-1
+
 ## Get started
 
 1. Install dependencies
@@ -15,6 +18,7 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
    ```bash
     npx expo start
    ```
+   need to run as development build go to docs for tutorial
 
 In the output, you'll find options to open the app in a
 

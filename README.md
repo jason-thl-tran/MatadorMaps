@@ -10,7 +10,9 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
    npm install
    ```
 
-2. Start the app
+2. Configure EAS build for android view links below for development build and android emulator
+
+3. Start the app
 
    ```bash
     npx expo start

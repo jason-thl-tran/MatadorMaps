@@ -5,7 +5,7 @@ import * as Location from 'expo-location';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import axios from 'axios';
 
-Mapbox.setAccessToken('');
+Mapbox.setAccessToken('pk.eyJ1IjoiamFzb3RyYW4iLCJhIjoiY20zNDJhNjZ0MW5rdjJrcTJhbmt3ejIwOSJ9.3bNfTLNjygYvF1LQ7TjyAQ');
 
 const App = () => {
   const [location, setLocation] = useState<{ latitude: number; longitude: number } | null>(null);
@@ -20,8 +20,6 @@ const App = () => {
   const [mode, setMode] = useState<'walking' | 'driving'>('walking');
   const mapRef = useRef<Mapbox.MapView>(null);
   const cameraRef = useRef<Mapbox.Camera>(null);
-  const [locationInfo, setLocationInfo] = useState<any>(null);
-  const [showLocationInfo, setShowLocationInfo] = useState(false);
   
   type DirectionStep = {
     maneuver: {
@@ -54,7 +52,7 @@ const App = () => {
         `https://api.mapbox.com/directions/v5/mapbox/${mode}/${location.longitude},${location.latitude};${coordinates[0]},${coordinates[1]}`,
         {
           params: {
-            access_token: '',
+            access_token: 'pk.eyJ1IjoiamFzb3RyYW4iLCJhIjoiY20zNDJhNjZ0MW5rdjJrcTJhbmt3ejIwOSJ9.3bNfTLNjygYvF1LQ7TjyAQ',
             geometries: 'geojson',
             steps: true, 
           },
@@ -71,15 +69,11 @@ const App = () => {
   };
 
   const handleResultPress = async (coordinates: [number, number]) => {
-    console.log('Selected coordinates:', coordinates);
+    console.log('Selected coordinates:', coordinates); 
     setDestination({ latitude: coordinates[1], longitude: coordinates[0] });
-    const info = await getLocationInfo(coordinates);
-    if (info) {
-      setLocationInfo(info);
-      setShowLocationInfo(true);
-    }
-    setSearch('');
-    setSearchResults([]);
+    await getDirections(coordinates); 
+    setSearch(''); 
+    setSearchResults([]); 
   };
 
   //need to fix this breaks directions
@@ -182,7 +176,7 @@ const App = () => {
         `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(query)}.json`,
         {
           params: {
-            access_token: '',
+            access_token: 'pk.eyJ1IjoiamFzb3RyYW4iLCJhIjoiY20zNDJhNjZ0MW5rdjJrcTJhbmt3ejIwOSJ9.3bNfTLNjygYvF1LQ7TjyAQ',
             proximity: `${location.longitude},${location.latitude}`, 
             limit: 5, 
           },
@@ -219,31 +213,6 @@ const App = () => {
     setDirections([]); 
     setRoute([]); 
     setDestination(null); 
-  };
-
-  const getLocationInfo = async (coordinates: [number, number]) => {
-    try {
-      const response = await axios.get(
-        `https://api.mapbox.com/geocoding/v5/mapbox.places/${coordinates[0]},${coordinates[1]}.json`,
-        {
-          params: {
-            access_token: '',
-          },
-        }
-      );
-      console.log('Location info:', response.data);
-      return response.data;
-    } catch (error) {
-      console.error('Error fetching location info:', error);
-      return null;
-    }
-  };
-
-  const startDirections = async () => {
-    if (destination) {
-      await getDirections([destination.longitude, destination.latitude]);
-      setShowLocationInfo(false);
-    }
   };
 
   const renderPredefinedButtons = () => {
@@ -401,17 +370,6 @@ const App = () => {
               </View>
               <TouchableOpacity style={styles.endNavButton} onPress={handleEndNavigation}>
                 <Text style={styles.endNavButtonText}>End Navigation</Text>
-              </TouchableOpacity>
-            </View>
-          )}
-
-          {showLocationInfo && locationInfo && (
-            <View style={styles.locationInfoContainer}>
-              <Text style={styles.locationInfoText}>
-                {locationInfo.features[0].place_name}
-              </Text>
-              <TouchableOpacity style={styles.startDirectionsButton} onPress={startDirections}>
-                <Text style={styles.startDirectionsButtonText}>Start Directions</Text>
               </TouchableOpacity>
             </View>
           )}
@@ -614,31 +572,5 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: 'white',
     marginBottom: 5,
-  },
-  locationInfoContainer: {
-    position: 'absolute',
-    top: 60,
-    left: 10,
-    right: 10,
-    backgroundColor: '#606060',
-    padding: 10,
-    borderRadius: 10,
-    elevation: 5,
-    zIndex: 10,
-  },
-  locationInfoText: {
-    fontSize: 16,
-    color: 'white',
-    marginBottom: 10,
-  },
-  startDirectionsButton: {
-    backgroundColor: 'red',
-    padding: 10,
-    borderRadius: 5,
-    alignItems: 'center',
-  },
-  startDirectionsButtonText: {
-    color: 'white',
-    fontSize: 16,
   },
 });
